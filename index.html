@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yükleniyor…</title>
+<title>Çok Yakında</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -69,13 +69,29 @@
     width: 300px;
     height: 160px;
     background: radial-gradient(circle at 50% 45%, #ffffff 0%, #ececec 65%, #c4c4c4 100%);
-    clip-path: path("M10,80 Q150,-30 290,80 Q150,190 10,80 Z");
-    animation: blink 5.2s infinite;
+    /* Şekil SVG clipPath ile — path() yerine url() referansı: her tarayıcıda
+       (eski Safari dahil) ve her ekranda birebir çalışır, "yarım açık" olmaz */
+    -webkit-clip-path: url(#eyeClip);
+    clip-path: url(#eyeClip);
+    transform-origin: 50% 50%;
+    animation: blink 6s ease-in-out infinite;
   }
 
+  /* Göz kırpma artık scaleY ile: asla yarım takılamaz. Kapalıyken ağır,
+     hipnotik bir şekilde açılır — uyku/trans hissi. */
   @keyframes blink {
-    0%, 91%, 100% { clip-path: path("M10,80 Q150,-30 290,80 Q150,190 10,80 Z"); }
-    94%, 96%      { clip-path: path("M10,80 Q150,72 290,80 Q150,88 10,80 Z"); }
+    0%, 86%, 100% { transform: scaleY(1); }
+    91%, 93%      { transform: scaleY(0.05); }
+  }
+
+  /* göz kapağı kıvrımı + ince kenar çizgisi */
+  .eye-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
   }
 
   /* iris saati takip eder — sarkaçla aynı süre ve easing */
@@ -146,6 +162,12 @@
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.85);
     filter: blur(2px);
+    animation: shineDrift 5s ease-in-out infinite;
+  }
+
+  @keyframes shineDrift {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(3px, 2px); }
   }
 
   /* ---------- Sarkaç — göze kadar iner, önünden geçer ---------- */
@@ -294,43 +316,22 @@
     top: calc(50% + 150px);
     transform: translateX(-50%);
     text-align: center;
-    color: #e0e0e0;
-    letter-spacing: 0.45em;
-    text-indent: 0.45em; /* letter-spacing'in sağa kaydırmasını dengeler */
-    text-transform: uppercase;
-    font-size: 17px;
+    color: #e8e8e8;
+    font-family: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
     font-weight: 400;
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    text-indent: 0.5em; /* letter-spacing'in sağa kaydırmasını dengeler */
+    text-transform: uppercase;
     white-space: nowrap;
-    animation: fadeText 2.6s ease-in-out infinite;
+    animation: fadeText 3s ease-in-out infinite;
     z-index: 8;
   }
 
-  .label small {
-    display: block;
-    margin-top: 12px;
-    font-size: 12px;
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: 0.2em;
-    color: #8a8a8a;
-    text-transform: none;
-  }
-
+  /* nefes alan parıltı: yanıp sönerken hafifçe ışıldar */
   @keyframes fadeText {
-    0%, 100% { opacity: 0.5; }
-    50%      { opacity: 1; }
-  }
-
-  .dots::after {
-    content: "";
-    animation: dots 1.8s steps(4) infinite;
-  }
-
-  @keyframes dots {
-    0%   { content: ""; }
-    25%  { content: "."; }
-    50%  { content: ".."; }
-    75%  { content: "..."; }
+    0%, 100% { opacity: 0.5; text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+    50%      { opacity: 1;   text-shadow: 0 0 24px rgba(255, 255, 255, 0.5); }
   }
 
   /* ---------- Film-noir kaplama ---------- */
@@ -352,13 +353,22 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pendulum, .iris-track, .iris-bob, .iris, .burst, .hand, .pupil, .rings, .eye, .watch { animation: none; }
+    .pendulum, .iris-track, .iris-bob, .iris, .burst, .hand, .pupil, .rings, .eye, .watch, .shine { animation: none; }
     .iris-track { transform: translate(-50%, -50%); }
     .pendulum.ghost1, .pendulum.ghost2 { display: none; }
   }
 </style>
 </head>
 <body>
+  <!-- Göz şekli: ölçekten bağımsız SVG clip (objectBoundingBox 0..1) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <clipPath id="eyeClip" clipPathUnits="objectBoundingBox">
+        <path d="M0.0333,0.5 Q0.5,-0.1875 0.9667,0.5 Q0.5,1.1875 0.0333,0.5 Z"/>
+      </clipPath>
+    </defs>
+  </svg>
+
   <div class="hypno-loader" role="status" aria-label="Yükleniyor">
     <div class="rings" aria-hidden="true"></div>
 
@@ -374,6 +384,10 @@
             <div class="shine"></div>
           </div>
         </div>
+        <svg class="eye-svg" viewBox="0 0 300 160" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M16,80 Q150,-18 284,80 Q150,178 16,80 Z" fill="none" stroke="rgba(0,0,0,0.16)" stroke-width="2"/>
+          <path d="M46,60 Q150,12 254,60" fill="none" stroke="rgba(0,0,0,0.13)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
       </div>
     </div>
 
@@ -399,10 +413,7 @@
       </div>
     </div>
 
-    <div class="label">
-      Yükleniyor<span class="dots"></span>
-      <small>İzlemeye devam edin…</small>
-    </div>
+    <div class="label">Çok Yakında</div>
 
     <div class="scanlines" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
