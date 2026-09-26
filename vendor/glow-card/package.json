@@ -1,0 +1,91 @@
+{
+	"name": "glow-card",
+	"version": "1.0.1",
+	"description": "Cursor-tracking glow border cards. Framework-agnostic Web Component. Zero dependencies, <1KB gzipped.",
+	"type": "module",
+	"license": "MIT",
+	"author": "Franz Schlögel",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mulkatz/glow-card"
+	},
+	"homepage": "https://github.com/mulkatz/glow-card#readme",
+	"bugs": {
+		"url": "https://github.com/mulkatz/glow-card/issues"
+	},
+	"keywords": [
+		"glow",
+		"card",
+		"cursor",
+		"hover",
+		"border",
+		"gradient",
+		"web-component",
+		"css",
+		"ui",
+		"animation",
+		"effect"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
+		},
+		"./react": {
+			"types": "./dist/react.d.ts",
+			"import": {
+				"types": "./dist/react.d.ts",
+				"default": "./dist/react.js"
+			},
+			"require": {
+				"types": "./dist/react.d.cts",
+				"default": "./dist/react.cjs"
+			}
+		}
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"sideEffects": false,
+	"engines": {
+		"node": ">=18"
+	},
+	"files": ["dist", "!dist/*.map"],
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"prepublishOnly": "npm run build",
+		"record-demo": "npx tsx scripts/record-demo.ts && ffmpeg -y -i tmp-video/*.webm -vf \"fps=12,scale=800:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer\" -loop 0 assets/demo.gif && rm -rf tmp-video"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.0",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@types/react": "^19.2.14",
+		"jsdom": "^28.1.0",
+		"tsup": "^8.3.0",
+		"typescript": "^5.7.0",
+		"playwright": "^1.50.0",
+		"tsx": "^4.19.0",
+		"vitest": "^3.0.0"
+	},
+	"peerDependencies": {
+		"react": ">=19.0.0"
+	},
+	"peerDependenciesMeta": {
+		"react": {
+			"optional": true
+		}
+	}
+}

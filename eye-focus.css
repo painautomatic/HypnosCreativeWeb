@@ -1,0 +1,43 @@
+/* A viewport veil with soft openings for the real iris and the reading target.
+   It never changes content stacking, layout, selection or click handling. */
+.eye-focus-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .8s cubic-bezier(.22,.7,.25,1), visibility 0s .8s;
+}
+.eye-focus-scene.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .7s cubic-bezier(.22,.7,.25,1), visibility 0s;
+}
+.eye-focus-scene svg { display: block; width: 100%; height: 100%; }
+.eye-focus-ray { stroke: url(#eye-focus-ray-light); stroke-width: 1; fill: none; opacity: .35; }
+.eye-focus-ring { fill: none; stroke: #d5ff8855; stroke-width: .8; }
+.eye-focus-target { text-shadow: 0 0 26px #c5f63b30; }
+.studio-copy p { transition: color .5s ease; }
+.studio-copy p.eye-focus-target { color: var(--ink); }
+.studio-mark.eye-glow-ready .eye-iris { transition: filter .7s ease; }
+.studio-mark.eye-glow-ready .eye-pupil { transition: scale .6s ease, transform .7s ease, box-shadow .7s ease; }
+.studio-mark.eye-glow-ready.eye-reading .eye-iris { filter: brightness(1.48) saturate(1.22); }
+.studio-mark.eye-glow-ready.eye-reading .eye-pupil {
+  transform: scale(.9);
+  box-shadow: 0 0 0 5px #070e04b3, 0 0 0 6px #daff90bc, 0 0 25px #c5f63b70, 0 0 55px #c5f63b30, inset 0 0 14px #000;
+}
+/* Rotated decorative particles must not widen the mobile page. */
+@media (max-width: 600px) {
+  .studio { overflow-x: clip; overflow-y: visible; }
+}
+@media (max-width: 600px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .eye-focus-scene { display: none; }
+  .eye-focus-target { text-shadow: none; }
+  .studio-mark.eye-glow-ready.eye-reading .eye-iris { filter: brightness(1.25) saturate(1.22); }
+  .studio-mark.eye-glow-ready.eye-reading .eye-pupil { transform: none; }
+}

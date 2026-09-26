@@ -1,0 +1,75 @@
+/* A quiet field behind the page. It never intercepts clicks or text selection. */
+body { isolation: isolate; }
+.ambient-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: clip;
+  background-image: radial-gradient(circle, #b3cf7338 .8px, transparent 1.1px);
+  background-size: 32px 32px;
+}
+.ambient-field canvas { display: block; width: 100%; height: 100%; }
+.ambient-field.is-ready { background-image: none; }
+.hero-grid { background-image: none; }
+.hero-stars { opacity: .45; }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .motion-enabled .hero h1 {
+    translate: var(--depth-x, 0px) var(--depth-y, 0px);
+    transition: translate .7s cubic-bezier(.2,.65,.3,1);
+  }
+  .motion-enabled .orbit-word::after {
+    transform: rotate(calc(-10deg + var(--orbit-angle, 0deg)));
+    transition: transform .8s ease-out;
+  }
+  .motion-enabled .horizon {
+    translate: var(--horizon-x, 0px) 0;
+    transition: translate 1.5s ease-out;
+  }
+  .motion-enabled .magnetic {
+    translate: var(--magnet-x, 0px) var(--magnet-y, 0px);
+    transition: translate .32s cubic-bezier(.2,.75,.25,1), background .25s, color .25s, box-shadow .25s, transform .25s;
+  }
+  .motion-enabled .magnetic:focus-visible { translate: 0 0; }
+  .motion-enabled .card-image {
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform .55s cubic-bezier(.2,.7,.2,1), box-shadow .4s;
+    box-shadow: 0 16px 45px #0000;
+  }
+  .motion-enabled .production-card:hover .card-image { box-shadow: 0 24px 55px #0005; }
+  .card-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(400px circle at var(--spot-x, 50%) var(--spot-y, 50%), #efffd335, transparent 65%);
+    opacity: var(--spot-strength, 0);
+    transition: opacity .5s;
+  }
+  .service, .process-grid article { position: relative; isolation: isolate; }
+  .service::before, .process-grid article::before {
+    content: '';
+    position: absolute;
+    inset: 0 -15px;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 6px;
+    background: radial-gradient(330px circle at var(--spot-x, 50%) var(--spot-y, 50%), #b9dd5930, transparent 72%);
+    opacity: var(--spot-strength, 0);
+    transition: opacity .45s;
+  }
+  .process-grid article::before { background: radial-gradient(240px circle at var(--spot-x, 50%) var(--spot-y, 50%), #bdf14c12, transparent 75%); }
+  .motion-enabled .orbit-map {
+    translate: var(--map-x, 0px) var(--map-y, 0px);
+    transition: translate .9s ease-out;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .ambient-field { background-size: 35px 35px; opacity: .6; }
+  .ambient-field canvas { display: none; }
+  .ambient-field.is-ready { background-image: radial-gradient(circle, #b3cf7338 .8px, transparent 1.1px); }
+}

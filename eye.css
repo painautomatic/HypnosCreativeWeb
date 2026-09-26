@@ -1,0 +1,161 @@
+/* The original Hypnos radial iris, reworked for the new dark / lime identity. */
+.studio-mark {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  isolation: isolate;
+  user-select: none;
+  -webkit-user-select: none;
+  --gaze-x: 0px;
+  --gaze-y: 0px;
+  --pupil-scale: 1;
+}
+.eye-coordinate {
+  position: absolute;
+  top: -4%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #9cae76;
+  font-size: 7px;
+  letter-spacing: .22em;
+}
+.eye-orbit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--lime);
+  overflow: visible;
+  animation: eye-orbit-drift 24s ease-in-out infinite alternate;
+}
+.eye-shell {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: #10170a;
+  border: 1px solid #bfd98870;
+  box-shadow: 0 0 0 5px #c5f63b04, 0 0 0 6px #c5f63b10, 0 25px 60px #0009, 0 0 70px #b5ed3520;
+}
+.eye-aperture {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  clip-path: ellipse(50% 50% at 50% 50%);
+  animation: eye-blink 9.4s ease-in-out infinite;
+}
+.eye-iris {
+  position: absolute;
+  inset: -3%;
+  border-radius: 50%;
+  overflow: hidden;
+  translate: calc(var(--gaze-x) * .2) calc(var(--gaze-y) * .2);
+  transition: translate .55s cubic-bezier(.2,.7,.2,1);
+}
+.eye-blades, .eye-filaments, .eye-veil, .eye-rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.eye-blades {
+  background: repeating-conic-gradient(from 0deg,
+    #c5f63b 0deg 7deg, #101a08 7deg 15deg,
+    #819a40 15deg 22deg, #121b0c 22deg 30deg,
+    #e5f4c9 30deg 37deg, #19220e 37deg 45deg,
+    #a3c75c 45deg 52deg, #111a09 52deg 60deg);
+  animation: eye-spin 52s linear infinite;
+}
+.eye-filaments {
+  background: repeating-conic-gradient(#10170600 0deg 1.4deg, #081003b3 1.4deg 2deg, #f1ffd533 2deg 2.3deg, transparent 2.3deg 4deg);
+  opacity: .6;
+  animation: eye-spin 90s linear infinite reverse;
+}
+.eye-veil {
+  background: radial-gradient(circle, #0a0f06 0 12%, #34441cc9 23%, #b8e1641a 38%, #10160855 57%, #091004dd 69%, #0a1006 73%),
+    linear-gradient(130deg, #efffba44, transparent 35%, #01050077 65%, #b7d77622);
+}
+.eye-rings circle { stroke: #e3f8b6; stroke-width: .2; opacity: .27; }
+.eye-rings circle:nth-child(3) { stroke-width: .6; opacity: .2; }
+.eye-gaze {
+  position: absolute;
+  width: 31%;
+  aspect-ratio: 1;
+  left: 34.5%;
+  top: 34.5%;
+  translate: var(--gaze-x) var(--gaze-y);
+  transition: translate .42s cubic-bezier(.16,.75,.3,1);
+}
+.eye-pupil {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 34% 22%, #3c4732 0%, #10170d 27%, #030602 64%, #111a09 87%, #607d32 100%);
+  border: 1px solid #dfff8d60;
+  box-shadow: 0 0 0 5px #070e0499, 0 0 0 6px #c4e97050, 0 0 25px #010500dd, inset 0 0 14px #000;
+  scale: var(--pupil-scale);
+  transition: scale .6s ease;
+}
+.eye-catchlight {
+  position: absolute;
+  left: 21%;
+  top: 17%;
+  width: 23%;
+  height: 16%;
+  border-radius: 50%;
+  rotate: -35deg;
+  background: #f5ffe9;
+  box-shadow: 0 0 10px #e5ffc677;
+  opacity: .92;
+}
+.eye-catchlight::after {
+  content: '';
+  position: absolute;
+  width: 22%;
+  aspect-ratio: 1;
+  right: -40%;
+  top: 220%;
+  border-radius: 50%;
+  background: #b8d899;
+}
+.eye-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 31% 14%, #efffc520, transparent 38%), linear-gradient(140deg, #edffd51a, transparent 37% 75%, #d7f59f0d);
+  box-shadow: inset 2px 3px 5px #e9ffd038, inset -4px -7px 18px #0009;
+}
+.eye-caption {
+  position: absolute;
+  bottom: -6%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3em;
+  color: #c7d1b7;
+  font-size: clamp(12px, 1.15vw, 17px);
+  letter-spacing: -.04em;
+}
+.eye-caption em { font-family: var(--serif); font-size: 1.35em; color: var(--ink); }
+.eye-caption i { width: 4px; height: 4px; margin-right: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px #c5f63b66; }
+.studio-mark *, .studio-mark *::before, .studio-mark *::after { animation-play-state: paused; }
+.studio-mark.eye-awake *, .studio-mark.eye-awake *::before, .studio-mark.eye-awake *::after { animation-play-state: running; }
+@keyframes eye-spin { to { transform: rotate(360deg); } }
+@keyframes eye-orbit-drift { from { transform: rotate(-5deg); } to { transform: rotate(8deg); } }
+@keyframes eye-blink {
+  0%, 43%, 47%, 100% { clip-path: ellipse(50% 50% at 50% 50%); }
+  44.5%, 45% { clip-path: ellipse(50% 1% at 50% 50%); }
+}
+@media (max-width: 600px) {
+  .studio-mark { width: min(100%, 300px); margin-block: 15px 18px; }
+  .eye-caption { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eye-iris, .eye-gaze { translate: none; }
+  .eye-pupil { scale: 1; }
+  .eye-aperture { clip-path: none; }
+}

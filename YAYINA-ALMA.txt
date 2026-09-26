@@ -1,0 +1,19 @@
+HYPNOS CREATIVE — CANLI YAYIN PAKETİ
+26 Eylül 2026
+
+KURULUM
+ZIP içeriğini sitenizin yayın klasörüne çıkarın (çoğu panelde public_html veya www).
+index.html dosyası doğrudan yayın klasöründe kalmalıdır; bir alt klasöre taşımayın.
+assets ve vendor klasörlerini ve CSS/JS dosyalarını birlikte yükleyin.
+Ek paket kurulumu veya derleme gerekmez. HTML, CSS ve JavaScript sunabilen bir hosting yeterlidir.
+Gözün Glow Card modülü için siteyi HTTP/HTTPS üzerinden açın; dosyaya çift tıklama tüm efektleri çalıştırmayabilir.
+
+İÇERİK
+Güncel siyah/lime site, görseller, fontlar, göz animasyonu, Glow Card ışıkları ve yumuşak fare odağı dahildir.
+goz-glow.html, yazısız bağımsız göz animasyonudur.
+Kütüphane ve font lisansları ilgili klasörlerdedir.
+
+FORM VE DİĞER SAYFALAR
+Brief formu e-posta taslağı hazırlar; kullanıcının e-posta uygulamasında açılır. Sunucuya otomatik e-posta gönderimi bağlı değildir.
+Blog, AI detayları ve gizlilik bağlantıları mevcut hypnoscreative.com adreslerine gider; bu sayfalar bu tek sayfalık site paketinde bulunmaz.
+Bu paket hazırlanırken mevcut canlı site üzerinde değişiklik yapılmamıştır.

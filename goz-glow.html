@@ -1,0 +1,23 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090c05"><title>Hypnos Vision — Glow</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="assets/fonts.css"><link rel="stylesheet" href="eye.css?v=eye-1"><link rel="stylesheet" href="eye-glow.css?v=1"><script src="eye.js?v=eye-glow-2" defer></script><script type="module" src="eye-glow.js?v=1"></script><style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#090c05;color:#f4f4e9;font-family:Manrope,Arial,sans-serif;--lime:#c5f63b;--ink:#f4f4e9;--serif:"Cormorant Garamond",serif}body{min-height:100svh;display:grid;place-items:center;background-image:radial-gradient(circle,#b8d55a24 .65px,transparent 1px);background-size:32px 32px;background-position:16px 16px;overflow-x:hidden}.vision-stage{width:min(86vw,86svh,980px);aspect-ratio:1;position:relative;overflow:clip}.vision-stage .studio-mark{width:100%;height:100%;margin:0}.eye-coordinate,.eye-caption{display:none!important}.controls{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:12px;align-items:center;white-space:nowrap}.controls button,.controls a{font:10px Manrope,Arial,sans-serif;color:#a8b58f;background:#0f170bbb;backdrop-filter:blur(12px);border:1px solid #c5f63b24;border-radius:24px;padding:11px 16px;text-decoration:none;cursor:pointer}.controls button:hover,.controls a:hover{border-color:#c5f63b77;color:#e4ffb9}:focus-visible{outline:2px solid #c5f63b;outline-offset:4px}.controls span{font-size:10px;margin-right:6px}@media(max-width:600px){.vision-stage{width:96vw}.controls{bottom:26px}.controls button,.controls a{font-size:9px}}.eye-motion-paused .studio-mark *{animation-play-state:paused!important}
+</style></head><body><main class="vision-stage"><div class="studio-mark" role="img" aria-label="Hypnos göz animasyonu: parlayan yeşil iris, hareketli ışık halkaları ve imleci takip eden göz bebeği">
+        <span class="eye-coordinate">HYPNOS / VISION 001</span>
+        <svg class="eye-orbit" viewBox="0 0 440 440" fill="none">
+          <circle cx="220" cy="220" r="202" stroke="currentColor" stroke-opacity=".13"/>
+          <circle cx="220" cy="220" r="192" stroke="currentColor" stroke-opacity=".24" stroke-dasharray="1 16"/>
+          <g transform="rotate(-28 220 220)"><ellipse cx="220" cy="220" rx="218" ry="64" stroke="currentColor" stroke-opacity=".3"/><circle cx="438" cy="220" r="3" fill="currentColor"/></g>
+        </svg>
+        <span class="eye-shell">
+          <span class="eye-aperture">
+            <span class="eye-iris">
+              <span class="eye-blades"></span>
+              <span class="eye-filaments"></span>
+              <span class="eye-veil"></span>
+              <svg class="eye-rings" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="47"/><circle cx="50" cy="50" r="39"/><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="21"/></svg>
+            </span>
+            <span class="eye-gaze"><span class="eye-pupil"><span class="eye-catchlight"></span></span></span>
+          </span>
+          <span class="eye-glass"></span>
+        </span>
+        <span class="eye-caption"><i></i>Başka türlü <em>bakıyoruz.</em></span>
+      </div></main><div class="controls"><button id="motion-toggle" aria-pressed="false"><span>Ⅱ</span>Hareketi durdur</button><a href="index.html#studyo">Sitede gör ↗</a></div><script>document.querySelector('#motion-toggle').addEventListener('click',event=>{const paused=document.body.classList.toggle('eye-motion-paused');const button=event.currentTarget;button.setAttribute('aria-pressed',String(paused));button.innerHTML=paused?'<span>▷</span>Hareketi başlat':'<span>Ⅱ</span>Hareketi durdur';});</script></body></html>

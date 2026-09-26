@@ -1,0 +1,37 @@
+/* Hypnos iris lighting, layered over glow-card 1.0.1. */
+.studio-mark.eye-glow-ready{--eye-glow-power:.42;--eye-light-x:45%;--eye-light-y:30%;--eye-glow-size:330px;overflow:visible;cursor:crosshair}
+.eye-aura,.eye-bloom,.eye-corona,.eye-sparks,.eye-touch-wave{position:absolute;pointer-events:none;border-radius:50%}
+.eye-aura{inset:4%;background:radial-gradient(ellipse at var(--eye-light-x) var(--eye-light-y),#c5f63b38 0,transparent 56%),radial-gradient(circle,transparent 41%,#aaff2438 54%,#8aaa201b 62%,transparent 72%);filter:blur(18px);opacity:calc(.65 + var(--eye-glow-power)*.35);animation:eye-aura-breathe 5.4s ease-in-out infinite;z-index:-1}
+.eye-bloom{inset:10%;background:repeating-conic-gradient(from 3deg,#d2ff6366 0deg 7deg,transparent 7deg 15deg,#b1ec3333 15deg 22deg,transparent 22deg 30deg,#f1ffc566 30deg 37deg,transparent 37deg 45deg,#9bff4533 45deg 52deg,transparent 52deg 60deg);mask-image:radial-gradient(circle,transparent 14%,#0009 29%,#000 62%,transparent 74%);filter:blur(12px);mix-blend-mode:screen;opacity:.55;animation:eye-spin 38s linear infinite}
+.eye-corona{inset:11.7%;border:1px solid #cfff7244;background:conic-gradient(from 0deg,transparent 0deg 90deg,#baff3555 130deg,#efffbde6 150deg,transparent 175deg 280deg,#c5f63b88 305deg,transparent 335deg);mask-image:radial-gradient(circle,transparent 67.9%,#000 68.5% 70.8%,transparent 71.1%);filter:drop-shadow(0 0 5px #c5ff54aa);animation:eye-spin 16s linear infinite;z-index:3}
+.eye-glow-ready .eye-shell{border-color:#d6faac8a;box-shadow:0 0 0 5px #c5f63b0b,0 0 0 6px #c5f63b35,0 20px 55px #000a,0 0 24px #b5ed354d,0 0 75px #c5f63b30}
+.eye-glow-ready .eye-iris{filter:brightness(1.25) saturate(1.22)}
+.eye-glow-ready .eye-blades{animation-duration:38s}
+.eye-glow-ready .eye-filaments{animation-duration:68s;opacity:.7}
+.eye-glow-ready .eye-veil{background:radial-gradient(circle,#080d04 0 12%,#34441cb0 23%,#b8e16405 38%,#10160822 57%,#091004b8 69%,#0a1006 73%),linear-gradient(130deg,#efffba55,transparent 35%,#01050055 65%,#b7d77633)}
+.eye-glow-ready .eye-rings circle{stroke:#d8ff87;opacity:.4}
+.eye-glow-ready .eye-rings circle:nth-child(3){opacity:.3}
+.eye-sweep{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 220deg,#d8ff7812 240deg,#f1ffb75c 266deg,transparent 293deg);mix-blend-mode:screen;mask-image:radial-gradient(circle,transparent 12%,#000 29% 65%,transparent 72%);animation:eye-spin 12s linear infinite}
+.eye-glow-ready .eye-pupil{border-color:#dcffa69e;box-shadow:0 0 0 5px #070e04b3,0 0 0 6px #c4e97090,0 0 19px #c5f63b44,0 0 35px #010500bb,inset 0 0 14px #000}
+.eye-glow-ready .eye-catchlight{background:#f5ffe9;box-shadow:0 0 8px #f3ffdacc,0 0 19px #dbff9577;opacity:1;animation:eye-highlight-breathe 4.6s ease-in-out infinite}
+.eye-glow-ready .eye-glass{background:radial-gradient(ellipse at var(--eye-light-x) var(--eye-light-y),#efffc53b,transparent 42%),linear-gradient(140deg,#edffd52b,transparent 37% 75%,#d7f59f15);box-shadow:inset 2px 3px 5px #e9ffd05e,inset -4px -7px 18px #0009}
+.eye-glow-ready .eye-orbit{filter:drop-shadow(0 0 4px #baf63b33)}
+.eye-glow-ready .eye-orbit>circle:first-child{stroke-opacity:.26}
+.eye-glow-ready .eye-orbit>circle:nth-child(2){stroke-opacity:.43}
+.eye-glow-ready .eye-orbit ellipse{stroke-opacity:.5}
+.eye-glow-ready .eye-orbit g>circle{filter:drop-shadow(0 0 3px #c5ff3c)}
+.eye-sparks{inset:0;transform:rotate(-28deg);z-index:4}
+.eye-spark{position:absolute;width:4px;height:4px;left:0;top:0;border-radius:50%;background:#edffbb;box-shadow:0 0 6px #e5ff83,0 0 16px #bcff4399;offset-path:ellipse(46% 35% at 50% 50%);animation:eye-spark-orbit 17s linear infinite;opacity:.8}
+.eye-spark:nth-child(2){width:2px;height:2px;animation-duration:23s;animation-delay:-8s;opacity:.6}
+.eye-spark:nth-child(3){width:3px;height:3px;animation-duration:31s;animation-delay:-17s;opacity:.4}
+.eye-glow-ready glow-card{position:absolute;inset:12%;border-radius:50%;pointer-events:none;--glow-color:#d2ff79;--glow-radius:50%;--glow-size:var(--eye-glow-size);--glow-blur:22px;--glow-border-width:2px;--glow-intensity:1;--glow-transition:opacity .5s ease;z-index:5}
+.eye-glow-ready glow-card[variant=background]{--glow-intensity:1;--glow-blur:13px;mix-blend-mode:screen}
+.eye-touch-wave{inset:12%;border:1px solid #eaffb0;opacity:0;z-index:4;box-shadow:0 0 10px #baff4c88}
+.eye-glow-ready.eye-touched .eye-touch-wave{animation:eye-touch-pulse 1.15s ease-out both;animation-play-state:running}
+.eye-glow-ready.eye-touched .eye-iris{filter:brightness(1.48) saturate(1.3);transition:filter .2s}
+.eye-glow-ready.glow-sleep *,.eye-glow-ready.glow-sleep *::before,.eye-glow-ready.glow-sleep *::after{animation-play-state:paused!important}
+@keyframes eye-aura-breathe{0%,100%{transform:scale(.97);opacity:.7}50%{transform:scale(1.055);opacity:1}}
+@keyframes eye-highlight-breathe{0%,100%{filter:brightness(1)}50%{filter:brightness(1.32)}}
+@keyframes eye-spark-orbit{from{offset-distance:0%}to{offset-distance:100%}}
+@keyframes eye-touch-pulse{0%{transform:scale(.92);opacity:0}18%{opacity:.8}100%{transform:scale(1.28);opacity:0}}
+@media(prefers-reduced-motion:reduce){.eye-glow-ready *, .eye-glow-ready *::before,.eye-glow-ready *::after{animation:none!important;transition:none!important}.eye-glow-ready .eye-aura{opacity:.75}.eye-glow-ready .eye-spark:nth-child(2){offset-distance:32%}.eye-glow-ready .eye-spark:nth-child(3){offset-distance:72%}}

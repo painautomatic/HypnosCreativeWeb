@@ -1,979 +1,229 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hypnos Creative — Yeni nesil yaratıcı stüdyo</title>
-<meta name="description" content="Fikir, film ve yapay zekâ aynı yaratıcı masada. Gerçek çekimden AI üretime; tek akış, tek yaratıcı dil.">
-<meta property="og:title" content="Hypnos Creative">
-<meta property="og:description" content="Yeni nesil yaratıcı stüdyo. Fikir, film ve yapay zekâ aynı yaratıcı masada.">
-<meta property="og:image" content="assets/logo.png">
-<meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%230143D1'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23fff'/%3E%3C/svg%3E">
-<script>document.documentElement.className += " js";</script>
-<style>
-  /* ============================================================
-     HYPNOS CREATIVE — Brand Guide: 01 Signal System düzeni
-     + 02 Dreamstate Cinema hipnotik imzası
-     ============================================================ */
-
-  :root {
-    /* Renk token'ları — marka rehberi */
-    --white:  #FFFFFF;
-    --haze:   #E9EEF8;
-    --ink:    #071634;
-    /* Rehberdeki destek grisi #667085, açık mavi zeminde 4.28:1'de kalıyordu;
-       gözle ayırt edilemeyecek kadar koyulaştırıldı → beyazda 5.62, hazede 4.83 */
-    --slate:  #5F6878;
-    --mist:   #CBD5E1;
-    --cobalt: #0143D1;
-    --violet: #6A3ED0;
-    --coral:  #EF4759;
-    --orange: #FF8128;
-
-    /* Tipografi — Nimbus Sans / Nimbus Mono PS karşılıkları */
-    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-
-    --maxw: 1220px;
-    --pad: clamp(20px, 5vw, 64px);
-    --section-y: clamp(76px, 10vw, 148px);
-    --radius: 4px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--white);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 17px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  .sr-only {
-    position: absolute; width: 1px; height: 1px;
-    padding: 0; margin: -1px; overflow: hidden;
-    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-  }
-
-  .wrap {
-    max-width: var(--maxw);
-    margin-inline: auto;
-    padding-inline: var(--pad);
-  }
-
-  a { color: inherit; }
-
-  :focus-visible {
-    outline: 3px solid var(--cobalt);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
-
-  /* ---------- Tipografi ölçeği ---------- */
-  .display {
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    /* 1.06: Türkçe büyük harf aksanları (Ğ, İ, Ü, Ö, Ş) üst satıra çarpmasın */
-    line-height: 1.06;
-    text-transform: uppercase;
-    white-space: pre-line;
-    text-wrap: balance;
-  }
-  .d-xl { font-size: clamp(33px, 5.4vw, 74px); }
-  .d-lg { font-size: clamp(27px, 4vw, 52px); }
-  .d-md { font-size: clamp(22px, 2.7vw, 35px); }
-
-  .meta {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--slate);
-  }
-
-  .lede {
-    font-size: clamp(17px, 1.5vw, 21px);
-    line-height: 1.55;
-    color: var(--slate);
-    max-width: 46ch;
-  }
-
-  /* Koyu zeminli bölümlerde ikincil metin mist olmalı — slate 3.6:1'de kalıyor */
-  .manifesto .meta, .contact .meta { color: var(--mist); }
-
-  /* ---------- Bölüm başlığı (eyebrow + halka) ---------- */
-  .sec-head { margin-bottom: clamp(36px, 5vw, 64px); }
-
-  .eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .eyebrow .ring {
-    flex: none;
-    width: 16px; height: 16px;
-    border: 2px solid currentColor;
-    border-radius: 50%;
-    position: relative;
-  }
-  .eyebrow .ring::after {
-    content: "";
-    position: absolute;
-    inset: 3px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-
-  /* ---------- Header ---------- */
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: saturate(180%) blur(12px);
-    -webkit-backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--mist);
-  }
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    padding-block: 14px;
-  }
-  /* Marka kuralı: min. dijital genişlik 180px, oranlar değişmez */
-  .logo img {
-    display: block;
-    width: clamp(180px, 17vw, 208px);
-    height: auto;
-  }
-  .nav {
-    display: flex;
-    align-items: center;
-    gap: clamp(14px, 2vw, 30px);
-  }
-  .nav a {
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    padding: 10px 2px;
-    position: relative;
-  }
-  .nav a::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 4px;
-    height: 2px;
-    background: var(--cobalt);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.24s ease;
-  }
-  .nav a:hover::after, .nav a:focus-visible::after { transform: scaleX(1); }
-
-  .lang {
-    min-width: 46px;
-    min-height: 44px;
-    padding: 0 14px;
-    border: 1.5px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    border-radius: 999px;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .lang:hover { background: var(--ink); color: var(--white); }
-
-  .burger {
-    display: none;
-    width: 44px; height: 44px;
-    border: 1.5px solid var(--ink);
-    border-radius: 999px;
-    background: none;
-    cursor: pointer;
-    position: relative;
-  }
-  .burger span {
-    position: absolute;
-    left: 12px; right: 12px;
-    height: 2px;
-    background: var(--ink);
-    transition: transform 0.25s ease, opacity 0.2s ease;
-  }
-  .burger span:nth-child(1) { top: 16px; }
-  .burger span:nth-child(2) { top: 21px; }
-  .burger span:nth-child(3) { top: 26px; }
-  .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
-  .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-  .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
-
-  /* ---------- HERO ---------- */
-  .hero {
-    position: relative;
-    padding-block: clamp(48px, 7vw, 96px) clamp(64px, 9vw, 120px);
-    overflow: hidden;
-  }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: clamp(32px, 5vw, 56px);
-    align-items: center;
-  }
-  .hero h1 { margin-bottom: 26px; }
-  .hero .lede { margin-bottom: 34px; }
-
-  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-height: 52px;
-    padding: 0 28px;
-    border-radius: 999px;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    text-decoration: none;
-    border: 1.5px solid transparent;
-    transition: transform 0.18s ease, background 0.2s ease, color 0.2s ease;
-  }
-  .btn:hover { transform: translateY(-2px); }
-  /* kobalt + beyaz = 8.6:1 kontrast */
-  .btn-primary { background: var(--cobalt); color: var(--white); }
-  .btn-primary:hover { background: #0136a8; }
-  .btn-ghost { border-color: var(--ink); color: var(--ink); }
-  .btn-ghost:hover { background: var(--ink); color: var(--white); }
-
-  /* ---------- İMZA ÖĞESİ: hipnotik iris ---------- */
-  .iris-stage {
-    position: relative;
-    justify-self: center;
-    width: clamp(260px, 38vw, 470px);
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
-  }
-  .iris-disc {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    /* logonun renk dizilimi — beyaz boşluklarla op-art pinwheel */
-    background: repeating-conic-gradient(
-      from 0deg,
-      var(--cobalt) 0deg 7deg, var(--white) 7deg 15deg,
-      var(--violet) 15deg 22deg, var(--white) 22deg 30deg,
-      var(--coral)  30deg 37deg, var(--white) 37deg 45deg,
-      var(--orange) 45deg 52deg, var(--white) 52deg 60deg
-    );
-    animation: spin 26s linear infinite;
-  }
-  /* merkeze doğru beyaza yumuşayan maske — "sisli/ışıklı" hissi */
-  .iris-veil {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-      var(--white) 0%, var(--white) 17%,
-      rgba(255,255,255,0.72) 27%,
-      rgba(255,255,255,0) 46%,
-      rgba(255,255,255,0) 82%,
-      rgba(255,255,255,0.9) 97%, var(--white) 100%);
-  }
-  .iris-rings { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .iris-rings circle { fill: none; stroke: var(--ink); opacity: 0.16; }
-
-  .iris-pupil {
-    position: relative;
-    width: 21%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(--ink);
-    transition: transform 0.36s cubic-bezier(.22,.61,.36,1);
-    will-change: transform;
-  }
-  .iris-pupil::after {
-    content: "";
-    position: absolute;
-    left: 24%; top: 20%;
-    width: 26%; aspect-ratio: 1;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ---------- MANİFESTO ---------- */
-  .manifesto {
-    background: var(--ink);
-    color: var(--white);
-    padding-block: var(--section-y);
-    position: relative;
-    overflow: hidden;
-  }
-  .manifesto .d-lg { max-width: 20ch; }
-  .manifesto-sub {
-    margin-top: 24px;
-    color: var(--mist);
-    font-size: clamp(16px, 1.4vw, 19px);
-    max-width: 44ch;
-  }
-  .manifesto-rings {
-    position: absolute;
-    right: -120px; top: 50%;
-    transform: translateY(-50%);
-    width: 420px; height: 420px;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-  .manifesto-rings circle { fill: none; stroke-width: 1.5; }
-
-  /* ---------- Bölümler ---------- */
-  .section { padding-block: var(--section-y); }
-  .section-haze { background: var(--haze); }
-
-  /* ---------- Hizmetler ---------- */
-  /* 6 kart → 3×2 tam ızgara; auto-fit boş hücre bırakıyordu */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--mist);
-    border: 1px solid var(--mist);
-  }
-  @media (max-width: 860px) { .cards { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
-  .card {
-    background: var(--white);
-    padding: clamp(26px, 3vw, 38px);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: background 0.25s ease;
-  }
-  .card:hover { background: var(--haze); }
-  .card-glyph { color: var(--accent, var(--cobalt)); }
-  .card-glyph svg { display: block; width: 44px; height: 44px; }
-  .card h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
-  .card p { font-size: 15px; color: var(--slate); line-height: 1.55; }
-
-  /* ---------- İşler / Film Cover System ---------- */
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: clamp(20px, 2.6vw, 32px);
-  }
-  .cover {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    transition: transform 0.28s cubic-bezier(.22,.61,.36,1);
-  }
-  .cover:hover { transform: translateY(-6px); }
-
-  .cover-art {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    background: var(--accent);
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-  }
-  .cover-art svg { width: 74%; height: 74%; }
-  /* Koyu hap: beyaz yazı mercan/turuncu üzerinde kontrastı geçmiyordu,
-     hap sayesinde aksan rengi ne olursa olsun okunur kalır */
-  .cover-art .badge {
-    position: absolute;
-    left: 12px; top: 12px;
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--white);
-    background: rgba(7, 22, 52, 0.82);
-    padding: 4px 9px;
-    border-radius: 999px;
-  }
-  .cover-ring {
-    position: absolute;
-    right: 14px; bottom: 14px;
-    width: 26px; height: 26px;
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-  }
-  .cover:hover .cover-ring { animation: pulse 1.4s ease-out infinite; }
-  @keyframes pulse {
-    0%   { transform: scale(1);   opacity: 0.9; }
-    100% { transform: scale(2.1); opacity: 0; }
-  }
-
-  /* Rehberdeki değişmez bilgi bandı */
-  .cover-info {
-    border: 1px solid var(--mist);
-    border-top: 0;
-    padding: 16px 18px 18px;
-    background: var(--white);
-    flex: 1;
-  }
-  .cover-studio {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    color: var(--slate);
-  }
-  .cover-title {
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    margin: 6px 0 10px;
-  }
-  .cover-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--slate);
-  }
-  .work-note {
-    margin-top: 28px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--slate);
-  }
-
-  /* ---------- Süreç ---------- */
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-    gap: clamp(24px, 3vw, 40px);
-  }
-  .step { border-top: 2px solid var(--accent); padding-top: 20px; }
-  /* Renk kodu üstteki çizgide taşınır; numara okunurluk için ink kalır
-     (mercan/turuncu 13px'te AA kontrastı geçmiyor) */
-  .step-num {
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.16em;
-    color: var(--ink);
-    font-weight: 700;
-  }
-  .step h3 { font-size: 19px; font-weight: 700; margin: 10px 0 8px; }
-  .step p { font-size: 15px; color: var(--slate); line-height: 1.55; }
-
-  /* ---------- Stüdyo ---------- */
-  .studio-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 72px);
-    align-items: start;
-  }
-  .facts { display: grid; gap: 22px; }
-  .fact { display: flex; gap: 16px; align-items: baseline; }
-  .fact-k {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    color: var(--slate);
-    min-width: 84px;
-    flex: none;
-  }
-  .fact-v { font-size: 16px; font-weight: 600; }
-
-  /* ---------- İletişim ---------- */
-  .contact { background: var(--ink); color: var(--white); padding-block: var(--section-y); }
-  .contact .d-lg { margin-bottom: 22px; }
-  .contact-lede { color: var(--mist); max-width: 42ch; margin-bottom: 34px; font-size: 18px; }
-  .mail {
-    display: inline-block;
-    font-size: clamp(20px, 3vw, 34px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    text-decoration: none;
-    border-bottom: 2px solid var(--orange);
-    padding-bottom: 4px;
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .mail:hover { color: var(--orange); }
-  .socials { display: flex; gap: 22px; margin-top: 34px; flex-wrap: wrap; }
-  .socials a {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--mist);
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.2s ease;
-  }
-  .socials a:hover { color: var(--white); }
-
-  /* ---------- Footer ---------- */
-  .site-footer { padding-block: 44px; border-top: 1px solid var(--mist); }
-  .footer-inner {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .site-footer img { width: 168px; height: auto; display: block; }
-
-  /* ---------- Scroll reveal ----------
-     Yalnız JS çalışıyorsa gizlenir; aksi hâlde içerik her zaman görünür kalır */
-  .js .reveal {
-    opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22,.61,.36,1);
-  }
-  .js .reveal.in { opacity: 1; transform: none; }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .iris-stage { grid-row: 1; width: clamp(230px, 62vw, 340px); }
-    .studio-grid { grid-template-columns: 1fr; }
-    .manifesto-rings { display: none; }
-  }
-
-  @media (max-width: 720px) {
-    .burger { display: block; }
-    .nav {
-      position: absolute;
-      left: 0; right: 0; top: 100%;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      background: var(--white);
-      border-bottom: 1px solid var(--mist);
-      padding: 8px var(--pad) 20px;
-      display: none;
-    }
-    .nav.open { display: flex; }
-    .nav a { padding: 15px 0; border-bottom: 1px solid var(--haze); font-size: 16px; }
-    .nav a::after { display: none; }
-  }
-
-  /* ---------- Hareket azaltma ---------- */
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .iris-disc, .cover-ring { animation: none !important; }
-    .js .reveal { opacity: 1; transform: none; transition: none; }
-    .btn:hover, .cover:hover { transform: none; }
-    .iris-pupil { transition: none; }
-  }
-</style>
-<!-- build-20260806-053757 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090c05">
+  <meta name="description" content="Hypnos Creative. Markanıza özel yapay zekâ çözümleri, AI prodüksiyon ve sosyal medya. İstanbul'dan yeni dünyalara.">
+  <title>Hypnos Creative — Hayalden yeni dünyalara.</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/font-2.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/fonts.css">
+  <link rel="stylesheet" href="styles.css?v=eye-1">
+  <link rel="stylesheet" href="interactions.css?v=eye-1">
+  <link rel="stylesheet" href="eye.css?v=eye-1">
+  <link rel="stylesheet" href="eye-glow.css?v=1">
+  <link rel="stylesheet" href="eye-focus.css?v=2">
+  <script src="app.js" defer></script>
+  <script src="interactions.js?v=eye-1" defer></script>
+  <script src="eye.js?v=eye-glow-2" defer></script>
+  <script type="module" src="eye-glow.js?v=1"></script>
+  <script src="eye-focus.js?v=2" defer></script>
 </head>
 <body>
+  <div class="ambient-field" aria-hidden="true"><canvas id="proximity-field"></canvas></div>
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <svg class="symbol-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="star" viewBox="0 0 80 80"><path d="m40 0 5 28L68 12 52 35l28 5-28 5 16 23-23-16-5 28-5-28-23 16 16-23L0 40l28-5-16-23 23 16Z" fill="currentColor"/></symbol>
+    <symbol id="globe" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="1"><circle cx="40" cy="40" r="33"/><ellipse cx="40" cy="40" rx="17" ry="33"/><ellipse cx="40" cy="40" rx="33" ry="13"/><path d="M7 40h66M40 7v66"/></g></symbol>
+  </svg>
 
-<a href="#main" class="sr-only">İçeriğe geç</a>
-
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a href="#main" class="logo" aria-label="Hypnos Creative">
-      <img src="assets/logo.svg" alt="Hypnos Creative">
-    </a>
-
-    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menü">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="nav" id="nav">
-      <a href="#hizmetler" data-tr="Hizmetler" data-en="Services">Hizmetler</a>
-      <a href="#isler"     data-tr="İşler"     data-en="Work">İşler</a>
-      <a href="#surec"     data-tr="Süreç"     data-en="Process">Süreç</a>
-      <a href="#studyo"    data-tr="Stüdyo"    data-en="Studio">Stüdyo</a>
-      <a href="#iletisim"  data-tr="İletişim"  data-en="Contact">İletişim</a>
-      <button class="lang" id="lang" aria-label="Dili değiştir / Switch language">EN</button>
+  <header class="header" id="top">
+    <a class="brand" href="#top" aria-label="Hypnos Creative, ana sayfa"><img src="assets/hypnos-logo.svg" width="146" height="62" alt="Hypnos Creative"></a>
+    <nav class="desktop-nav" aria-label="Ana menü">
+      <a href="#hizmetler">Hizmetler <span>⌄</span></a><a href="#uretim">Üretim alanları</a><a href="#studyo">Stüdyo</a><a href="#surec">Süreç</a><a href="https://hypnoscreative.com/blog/" target="_blank" rel="noopener noreferrer">Blog <span>↗</span></a>
     </nav>
-  </div>
-</header>
+    <button class="header-cta" data-open-brief>Birlikte üretelim <svg><use href="#arrow"/></svg></button>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç"><span></span><span></span></button>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobil menü" hidden>
+      <a href="#hizmetler">Hizmetler</a><a href="#ai-cozumleri">AI çözümleri</a><a href="#uretim">Üretim alanları</a><a href="#studyo">Stüdyo</a><a href="#surec">Süreç</a><a href="#iletisim">İletişim</a><a href="https://hypnoscreative.com/blog/" target="_blank" rel="noopener noreferrer">Blog ↗</a>
+    </nav>
+  </header>
 
-<main id="main">
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="hero-meta"><span class="status-dot"></span> İSTANBUL'DAN, YENİ DÜNYALARA.</div>
+      <div class="hero-content">
+        <div class="hero-title-wrap">
+          <h1 id="hero-title"><span>Hayalden</span><span class="serif orbit-word">yeni<svg class="title-star" aria-hidden="true"><use href="#star"/></svg></span><span>dünyalara.</span></h1>
+          <p>Markanıza özel yapay zekâ çözümleri. <br>Fikirden final kareye, yaratıcı prodüksiyon.</p>
+          <a class="pill hero-link" href="#ai-cozumleri">Yeni dünyanı keşfet <span>↗</span></a>
+        </div>
+        <aside class="quick-brief">
+          <div class="brief-top"><span>BİR FİKRİN Mİ VAR?</span><svg aria-hidden="true"><use href="#star"/></svg></div>
+          <h2>Birlikte <br><em>başlayalım.</em></h2>
+          <p>İlk adım, küçük bir merhaba.</p>
+          <form id="quick-form">
+            <label for="quick-name">Adın soyadın</label><input id="quick-name" name="name" autocomplete="name" placeholder="Seni nasıl tanıyalım?" maxlength="100" required>
+            <label for="quick-email">E-posta adresin</label><input id="quick-email" name="email" type="email" autocomplete="email" placeholder="merhaba@markan.com" maxlength="160" required>
+            <label for="quick-message">Aklındaki fikir</label><textarea id="quick-message" name="message" placeholder="Neler hayal ediyorsun?" rows="2" maxlength="2000" required></textarea>
+            <button class="brief-submit" type="submit">Devam edelim <svg aria-hidden="true"><use href="#arrow"/></svg></button>
+          </form>
+          <span class="brief-note">Büyük işler bir fikirle başlar.</span>
+        </aside>
+      </div>
+      <div class="horizon" aria-hidden="true"></div>
+      <div class="hero-bottom"><span>AI SOLUTIONS · CREATIVE PRODUCTION</span><a href="#yaklasim">KEŞFETMEYE DEVAM ET <span>↓</span></a><span>41°00′ N &nbsp; 29°00′ E</span></div>
+    </section>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="meta" style="margin-bottom:22px"
-           data-tr="Yeni nesil yaratıcı stüdyo"
-           data-en="Next generation creative studio">Yeni nesil yaratıcı stüdyo</p>
+    <section class="manifesto section-pad" id="yaklasim">
+      <span class="eyebrow"><span class="tiny-star">✳</span> YARATICILIĞIN YENİ DÜNYASI</span>
+      <h2>Hayal kurmak yetmez. <br>Onu <em>görünür</em> kılmak gerekir.</h2>
+      <p>Markanızın sektörünü ve kimliğini öğrenen, o kimliğe bağlı görsel, video ve metin üreten yapay zekâ çözümleri kuruyoruz. Reklam filmi, kampanya görseli ve sosyal medya içeriği; <span>aynı kaynaktan, aynı dille.</span></p>
+      <div class="manifesto-foot"><span>STRATEJİYLE BAŞLAR.</span><svg aria-hidden="true"><use href="#star"/></svg><span>HAYAL GÜCÜYLE BÜYÜR.</span></div>
+    </section>
 
-        <h1 class="display d-xl"
-            data-tr="Uyku değil.|Yeni bir görme biçimi."
-            data-en="Not sleep.|A new way of seeing.">Uyku değil.
-Yeni bir görme biçimi.</h1>
-
-        <p class="lede"
-           data-tr="Fikir, film ve yapay zekâ aynı yaratıcı masada. Gerçek çekimden AI üretime; tek akış, tek yaratıcı dil."
-           data-en="Idea, film and artificial intelligence at the same creative table. From real shoots to AI production; one flow, one creative language.">Fikir, film ve yapay zekâ aynı yaratıcı masada. Gerçek çekimden AI üretime; tek akış, tek yaratıcı dil.</p>
-
-        <div class="cta-row">
-          <a href="#isler" class="btn btn-primary" data-tr="İşleri gör" data-en="See the work">İşleri gör</a>
-          <a href="#iletisim" class="btn btn-ghost" data-tr="Konuşalım" data-en="Let's talk">Konuşalım</a>
+    <section class="ai-section section-pad" id="ai-cozumleri" aria-labelledby="ai-title">
+      <div class="section-top"><span class="eyebrow">01 / SEKTÖRE ÖZEL AI ÇÖZÜMLERİ</span><span class="micro">HER MARKA, AYRI BİR EVREN.</span></div>
+      <h2 id="ai-title">Merkezinde markanız. <br>Yörüngesinde <em>olasılıklar.</em></h2>
+      <p class="section-intro">Sektörünüzü, ürünlerinizi ve iletişim ihtiyacınızı tanıyoruz. <br>Size özel bir üretim dünyasını, sizin kimliğinizle kuruyoruz.</p>
+      <div class="orbit-layout">
+        <div class="universe" aria-label="AI çözümünün beş adımı">
+          <div class="planet-glow" aria-hidden="true"></div>
+          <svg class="orbit-map" viewBox="0 0 600 600" aria-hidden="true">
+            <defs><radialGradient id="planet"><stop stop-color="#171e0b"/><stop offset=".7" stop-color="#0c1006"/><stop offset="1" stop-color="#080c04"/></radialGradient></defs>
+            <circle cx="300" cy="300" r="245" fill="url(#planet)" stroke="#a6d747" stroke-opacity=".4"/>
+            <g fill="none" stroke="#9bbe54" stroke-opacity=".19"><circle cx="300" cy="300" r="90"/><circle cx="300" cy="300" r="145"/><circle cx="300" cy="300" r="196"/><ellipse cx="300" cy="300" rx="240" ry="80" transform="rotate(-30 300 300)"/><ellipse cx="300" cy="300" rx="240" ry="80" transform="rotate(50 300 300)"/></g>
+            <circle class="orbit-track" cx="300" cy="300" r="196" fill="none" stroke="#c5f63b" stroke-width="2" stroke-dasharray="3 1229"/>
+          </svg>
+          <div class="orbit-center"><svg aria-hidden="true"><use href="#star"/></svg><span>markanız <br><em>merkezde.</em></span></div>
+          <button class="orbit-point point-0 is-active" data-orbit="0" aria-pressed="true"><span>01</span>Sektör analizi</button>
+          <button class="orbit-point point-1" data-orbit="1" aria-pressed="false"><span>02</span>Marka kimliği</button>
+          <button class="orbit-point point-2" data-orbit="2" aria-pressed="false"><span>03</span>Görsel, video, metin</button>
+          <button class="orbit-point point-3" data-orbit="3" aria-pressed="false"><span>04</span>İş akışına uyum</button>
+          <button class="orbit-point point-4" data-orbit="4" aria-pressed="false"><span>05</span>Sürekli gelişim</button>
+        </div>
+        <div class="orbit-copy" aria-live="polite" aria-atomic="true">
+          <span class="orbit-counter">01 <span>/ 05</span></span>
+          <h3 id="orbit-title">Önce sizi <br>tanıyoruz.</h3>
+          <p id="orbit-description">Sektörünüzü, rakiplerinizi, hedef kitlenizi ve içerik ihtiyacınızı inceliyoruz. Çözümünüzü markanızın gerçek ihtiyaçları üzerine tasarlıyoruz.</p>
+          <div class="orbit-progress" aria-hidden="true"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+          <a class="text-link" href="#iletisim">Markanız için konuşalım <svg aria-hidden="true"><use href="#arrow"/></svg></a>
         </div>
       </div>
+      <div class="sector-strip" aria-label="Çalıştığımız sektörler"><span>Perakende</span><i>✳</i><span>Gıda</span><i>✳</i><span>Moda</span><i>✳</i><span>Otomotiv</span><i>✳</i><span>Hizmet</span></div>
+    </section>
 
-      <!-- İmza öğesi: hipnotik iris -->
-      <div class="iris-stage" id="iris" aria-hidden="true">
-        <div class="iris-disc"></div>
-        <div class="iris-veil"></div>
-        <svg class="iris-rings" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="49" stroke-width="0.4"/>
-          <circle cx="50" cy="50" r="40" stroke-width="0.4"/>
-          <circle cx="50" cy="50" r="31" stroke-width="0.4"/>
-          <circle cx="50" cy="50" r="22" stroke-width="0.4"/>
+    <section class="production section-pad" id="uretim">
+      <div class="section-top"><span class="eyebrow">02 / ÜRETİM ALANLARI</span><span class="micro">BİR STÜDYO. ÇOK FAZLA İHTİMAL.</span></div>
+      <div class="split-heading"><h2>Bir fikrin <br><em>binbir</em> ihtimali.</h2><p>Markanıza özel çözümden reklam filmine, <br>kampanya görselinden sosyal medyaya. <br>Fikirden final teslime, tek stüdyo.</p></div>
+      <div class="production-grid">
+        <a class="production-card" href="https://hypnoscreative.com/ai-cozumler/" target="_blank" rel="noopener noreferrer">
+          <div class="card-image"><img src="assets/covers/ai-core.jpg" width="1000" height="1250" alt="Lime ışıklı cam çekirdeği çevreleyen metal yörüngeler: markaya özel yapay zekâ" loading="lazy" decoding="async"><span class="card-number">01 / AI SOLUTIONS</span><span class="card-arrow"><svg><use href="#arrow"/></svg></span></div>
+          <div class="card-text"><h3>Markanıza özel <em>AI.</em></h3><p>Kimliğinizi öğrenen, sizin dilinizde görsel, video ve metin üreten çözümler.</p><span>AI ÇÖZÜMLERİNİ KEŞFET ↗</span></div>
+        </a>
+        <a class="production-card" href="https://hypnoscreative.com/ai-produksiyon/" target="_blank" rel="noopener noreferrer">
+          <div class="card-image"><img src="assets/covers/ai-film.jpg" width="1000" height="1250" alt="Işıklı bir küreyi çerçeveleyen grafit diyafram: sinematik AI prodüksiyon" loading="lazy" decoding="async"><span class="card-number">02 / AI PRODUCTION</span><span class="card-arrow"><svg><use href="#arrow"/></svg></span></div>
+          <div class="card-text"><h3>Hayalden <em>kareye.</em></h3><p>Reklam filmi, animasyon, key visual, ürün görseli ve dijital karakter üretimi.</p><span>AI PRODÜKSİYONU KEŞFET ↗</span></div>
+        </a>
+        <a class="production-card" href="https://hypnoscreative.com/ai-sosyal-medya/" target="_blank" rel="noopener noreferrer">
+          <div class="card-image"><img src="assets/covers/ai-social.jpg" width="1000" height="1250" alt="Koyu cam katmanların arasından geçen lime ışık akışı: sosyal medya içerikleri" loading="lazy" decoding="async"><span class="card-number">03 / AI SOCIAL</span><span class="card-arrow"><svg><use href="#arrow"/></svg></span></div>
+          <div class="card-text"><h3>Akışın <em>ötesinde.</em></h3><p>Reels, story, kısa video ve her platformun dilini konuşan seri içerikler.</p><span>AI SOSYAL MEDYAYI KEŞFET ↗</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="services-frame" id="hizmetler">
+      <div class="services-panel">
+        <div class="section-top"><span class="eyebrow">03 / HİZMETLER</span><svg class="service-star" aria-hidden="true"><use href="#star"/></svg></div>
+        <h2>İyi fikirleri <br><em>gerçeğe</em> dönüştürürüz.</h2>
+        <div class="service-list">
+          <details class="service" open><summary><span class="service-no">01</span><h3>Sektöre özel AI çözümleri</h3><span class="plus" aria-hidden="true"></span></summary><div class="service-body"><p>Markanızın sektörü ve kimliğine göre kurulan, marka kimliğine bağlı üreten özel yapay zekâ çözümleri. Analizden pilot üretime, ekibinizin günlük iş akışına kadar.</p><div class="tags"><span>Marka analizi</span><span>Özel geliştirme</span><span>Üretim sistemi</span></div></div></details>
+          <details class="service"><summary><span class="service-no">02</span><h3>AI film & görsel üretim</h3><span class="plus" aria-hidden="true"></span></summary><div class="service-body"><p>Yapay zekâ destekli reklam filmleri, sinematik sahneler ve kampanya görselleri. Fikrin ihtiyacına göre AI üretimi, gerçek çekim ve hibrit prodüksiyonu bir araya getiriyoruz.</p><div class="tags"><span>Reklam filmi</span><span>AI görsel</span><span>Hibrit prodüksiyon</span></div></div></details>
+          <details class="service"><summary><span class="service-no">03</span><h3>Konsept & kreatif direksiyon</h3><span class="plus" aria-hidden="true"></span></summary><div class="service-body"><p>Projenin ana fikrini, senaryosunu, treatment ve storyboard'unu geliştiriyoruz. Her karede aynı hikâyeyi anlatan tutarlı bir görsel dünya kuruyoruz.</p><div class="tags"><span>Konsept</span><span>Senaryo</span><span>Storyboard</span></div></div></details>
+          <details class="service"><summary><span class="service-no">04</span><h3>Marka içeriği & kampanya</h3><span class="plus" aria-hidden="true"></span></summary><div class="service-body"><p>Kampanya fikri, içerik serileri ve farklı mecralara yönelik uygulamalar. Markanızın iletişim tonunu her formatta koruyan, birbiriyle bağlantılı içerikler tasarlıyoruz.</p><div class="tags"><span>Kampanya fikri</span><span>İçerik serileri</span><span>Sosyal medya</span></div></div></details>
+          <details class="service"><summary><span class="service-no">05</span><h3>Tasarım & key visual</h3><span class="plus" aria-hidden="true"></span></summary><div class="service-body"><p>Afiş, key visual, sosyal medya tasarımı ve kampanya materyalleri. Tek bir yaratıcı fikri, markanızın tüm temas noktalarına taşıyoruz.</p><div class="tags"><span>Key visual</span><span>Grafik tasarım</span><span>Mecraya uyarlama</span></div></div></details>
+          <details class="service"><summary><span class="service-no">06</span><h3>Prodüksiyon & post-prodüksiyon</h3><span class="plus" aria-hidden="true"></span></summary><div class="service-body"><p>Yönetmenlik ve çekim planlamasından kurgu, motion design, VFX, renk ve ses tasarımına. Tüm üretim sürecini final teslimine kadar yönetiyoruz.</p><div class="tags"><span>Çekim</span><span>Kurgu & VFX</span><span>Renk & ses</span></div></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="process section-pad" id="surec">
+      <div class="section-top"><span class="eyebrow">04 / SÜREÇ</span><span class="micro">FİKİRDEN, FİNAL KAREYE.</span></div>
+      <h2>İyi işin arkasında <br><em>iyi bir süreç</em> var.</h2>
+      <div class="process-grid">
+        <article><span class="step-number">01 <span>↗</span></span><h3>Dinliyoruz.</h3><span class="step-label">BRIEF & KEŞİF</span><p>Amacınızı, hedef kitlenizi, teslim formatlarını ve takvimi birlikte netleştiriyoruz.</p></article>
+        <article><span class="step-number">02 <span>↗</span></span><h3>Hayal ediyoruz.</h3><span class="step-label">KONSEPT & GÖRSEL DÜNYA</span><p>Ana fikir, senaryo, storyboard ve görsel referanslarla projenin dünyasını kuruyoruz.</p></article>
+        <article><span class="step-number">03 <span>↗</span></span><h3>Üretiyoruz.</h3><span class="step-label">AI, GERÇEK ÇEKİM & HİBRİT</span><p>Onaylanan yaklaşıma göre gerçek çekim, AI üretim veya hibrit prodüksiyona başlıyoruz.</p></article>
+        <article><span class="step-number">04 <svg aria-hidden="true"><use href="#star"/></svg></span><h3>Hayata geçiriyoruz.</h3><span class="step-label">POST-PRODÜKSİYON & TESLİM</span><p>Kurgu, motion, VFX, renk ve sesi tamamlıyor; her mecra için yayına hazır teslim ediyoruz.</p></article>
+      </div>
+    </section>
+
+    <section class="studio section-pad" id="studyo">
+      <div class="studio-mark" aria-hidden="true">
+        <span class="eye-coordinate">HYPNOS / VISION 001</span>
+        <svg class="eye-orbit" viewBox="0 0 440 440" fill="none">
+          <circle cx="220" cy="220" r="202" stroke="currentColor" stroke-opacity=".13"/>
+          <circle cx="220" cy="220" r="192" stroke="currentColor" stroke-opacity=".24" stroke-dasharray="1 16"/>
+          <g transform="rotate(-28 220 220)"><ellipse cx="220" cy="220" rx="218" ry="64" stroke="currentColor" stroke-opacity=".3"/><circle cx="438" cy="220" r="3" fill="currentColor"/></g>
         </svg>
-        <div class="iris-pupil" id="pupil"></div>
+        <span class="eye-shell">
+          <span class="eye-aperture">
+            <span class="eye-iris">
+              <span class="eye-blades"></span>
+              <span class="eye-filaments"></span>
+              <span class="eye-veil"></span>
+              <svg class="eye-rings" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="47"/><circle cx="50" cy="50" r="39"/><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="21"/></svg>
+            </span>
+            <span class="eye-gaze"><span class="eye-pupil"><span class="eye-catchlight"></span></span></span>
+          </span>
+          <span class="eye-glass"></span>
+        </span>
+        <span class="eye-caption"><i></i>Başka türlü <em>bakıyoruz.</em></span>
       </div>
-    </div>
-  </section>
+      <div class="studio-copy"><span class="eyebrow">05 / HYPNOS CREATIVE</span><h2>İstanbul'da bir stüdyo. <br><em>Sınırları olmayan</em> <br>bir hayal gücü.</h2><p>2026'da İstanbul'da kurulan Hypnos Creative; yaratıcı yönetmenlik, prodüksiyon ve yapay zekâ üretim çözümlerini bir araya getirir.</p><p>Markalar, ajanslar ve prodüksiyon şirketleriyle çalışıyoruz. Her projede markanın sektörünü ve kimliğini öğreniyor, yaratıcı geliştirmeden final teslime kadar tüm süreci yönetiyoruz.</p><div class="studio-facts"><span>İSTANBUL · TÜRKİYE</span><span>TÜRKÇE / ENGLISH</span><span>EST. 2026</span></div></div>
+    </section>
 
-  <!-- ============ MANİFESTO ============ -->
-  <section class="manifesto">
-    <svg class="manifesto-rings" viewBox="0 0 200 200" aria-hidden="true">
-      <circle cx="100" cy="100" r="96" stroke="#6A3ED0"/>
-      <circle cx="100" cy="100" r="78" stroke="#0143D1"/>
-      <circle cx="100" cy="100" r="60" stroke="#EF4759"/>
-      <circle cx="100" cy="100" r="42" stroke="#FF8128"/>
-      <circle cx="100" cy="100" r="24" stroke="#CBD5E1"/>
-    </svg>
-    <div class="wrap reveal">
-      <h2 class="display d-lg"
-          data-tr="Hayal kurmak yetmez.|Onu görünür kılmak gerekir."
-          data-en="Dreaming is not enough.|It has to be made visible.">Hayal kurmak yetmez.
-Onu görünür kılmak gerekir.</h2>
-      <p class="manifesto-sub"
-         data-tr="Sinema, tasarım ve yeni nesil üretim bir arada. Hypnos Creative, fikri ilk çizgiden son kareye kadar tek elden taşır."
-         data-en="Cinema, design and next generation production together. Hypnos Creative carries an idea from the first line to the final frame.">Sinema, tasarım ve yeni nesil üretim bir arada. Hypnos Creative, fikri ilk çizgiden son kareye kadar tek elden taşır.</p>
-    </div>
-  </section>
-
-  <!-- ============ HİZMETLER ============ -->
-  <section class="section" id="hizmetler">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="eyebrow" style="color:var(--cobalt)">
-          <span class="ring"></span>
-          <span class="meta" data-tr="Hizmetler" data-en="Services">Hizmetler</span>
-        </div>
-        <h2 class="display d-md"
-            data-tr="Tek masada üretim"
-            data-en="Production at one table">Tek masada üretim</h2>
+    <section class="faq-section section-pad" id="sss">
+      <div class="faq-heading"><span class="eyebrow">06 / MERAK EDİLENLER</span><h2>Aklındaki <br><em>sorular.</em></h2><a class="text-link" href="mailto:info@hypnoscreative.com">Bir de bize sor <svg aria-hidden="true"><use href="#arrow"/></svg></a></div>
+      <div class="faq-list">
+        <details><summary>Markaya özel yapay zekâ çözümü ne demek?<span class="plus" aria-hidden="true"></span></summary><p>Sektörünüzü, ürünlerinizi, marka kimliğinizi ve iletişim ihtiyacınızı inceliyoruz. Logo, renk paleti, tipografi, ürün fotoğrafları ve iletişim tonunu markanızın referans kütüphanesine alıyoruz. Üretilen görsel, video ve metinler bu kimliğe bağlı kalıyor. Çözüm, ekibinizin çalışma biçimine göre kuruluyor ve markanızla birlikte gelişiyor.</p></details>
+        <details><summary>Yapay zekâ ile reklam filmi nasıl üretiliyor?<span class="plus" aria-hidden="true"></span></summary><p>Brief, konsept ve senaryoyla başlıyoruz. Storyboard ve görsel referanslar onaylandıktan sonra sahneleri AI modelleriyle üretiyor, gerektiğinde gerçek çekimle birleştiriyoruz. Kurgu, renk, ses ve VFX'in ardından filmi yayına hazır teslim ediyoruz.</p></details>
+        <details><summary>AI prodüksiyon daha mı ekonomik?<span class="plus" aria-hidden="true"></span></summary><p>Projenin türüne göre değişir. Büyük setler, kalabalık sahneler, farklı lokasyonlar ve çok sayıda içerik varyasyonu gereken işlerde AI maliyet avantajı sağlayabilir. Oyuncu performansı veya ürün detayının önemli olduğu projelerde gerçek çekim ya da hibrit prodüksiyon daha doğru olabilir.</p></details>
+        <details><summary>Bir AI reklam filmi ne kadar sürede tamamlanır?<span class="plus" aria-hidden="true"></span></summary><p>Standart bir reklam filmi, konsept ve görsel yön onaylandıktan sonra genellikle 2–4 hafta içinde tamamlanır. Süre; filmin uzunluğuna, sahne sayısına, görsel detayına ve revizyon kapsamına göre değişir.</p></details>
+        <details><summary>Ticari kullanım hakları nasıl belirleniyor?<span class="plus" aria-hidden="true"></span></summary><p>Teslim kapsamı ve ticari kullanım hakları proje sözleşmesinde belirtilir. Ticari kullanıma uygun araçlar ve lisanslı kaynaklar tercih edilir. Marka, kişi ve telif hakları proje özelinde değerlendirilir.</p></details>
+        <details><summary>Gerçek çekim ve AI birlikte kullanılabilir mi?<span class="plus" aria-hidden="true"></span></summary><p>Evet. Oyuncu ve ürünler gerçek sette çekilirken mekân, atmosfer, arka plan veya çekilmesi zor sahneler yapay zekâ ile üretilebilir. İki yöntem prodüksiyonun başında birlikte planlanır ve post-prodüksiyonda birleştirilir.</p></details>
+        <details><summary>Hangi bölgelerde çalışıyorsunuz?<span class="plus" aria-hidden="true"></span></summary><p>İstanbul merkezliyiz. Türkiye genelindeki ve yurt dışındaki markalarla proje bazlı çalışıyoruz. Fiziksel çekimler projenin gerektirdiği lokasyonda, diğer üretim süreçleri ise uzaktan yürütülebilir.</p></details>
       </div>
-      <div class="cards reveal" id="services"></div>
+    </section>
+
+    <section class="contact-banner" id="iletisim">
+      <div class="contact-stamp" aria-hidden="true"><svg><use href="#globe"/></svg></div>
+      <span class="eyebrow">BİR SONRAKİ DÜNYA, SENİN FİKRİNLE BAŞLASIN.</span>
+      <h2>Yeni bir dünya. <br><em>Birlikte.</em></h2>
+      <button class="pill pill-dark" data-open-brief>Projeni anlat <svg aria-hidden="true"><use href="#arrow"/></svg></button>
+      <div class="contact-caption"><span>FİKRİNİ GETİR.</span><span>OLASILIKLARI BİRLİKTE KEŞFEDELİM.</span></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top"><div><span class="eyebrow">BİR MERHABA KADAR YAKINIZ.</span><a class="footer-email" href="mailto:info@hypnoscreative.com">info@hypnoscreative.com <svg aria-hidden="true"><use href="#arrow"/></svg></a></div><a class="back-top" href="#top" aria-label="Sayfanın başına dön">↑</a></div>
+    <div class="footer-columns"><p>Kirazlıtepe Mah. Yahya Kemal Sok. No:2 <br>Üsküdar / İstanbul</p><div><a href="https://instagram.com/hypnos.creative/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://linkedin.com/company/hypnosagency/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div><div><a href="#hizmetler">Hizmetler</a><a href="#studyo">Stüdyo</a><a href="#sss">Sık sorulan sorular</a></div></div>
+    <div class="footer-wordmark" aria-hidden="true">hypnos<span>✳</span></div>
+    <div class="footer-bottom"><span>© 2026 HYPNOS CREATIVE</span><span>HAYALDEN YENİ DÜNYALARA.</span><a href="https://hypnoscreative.com/gizlilik/" target="_blank" rel="noopener noreferrer">Gizlilik & KVKK ↗</a></div>
+  </footer>
+
+  <dialog id="brief-dialog" aria-labelledby="dialog-title">
+    <button class="dialog-close" aria-label="Pencereyi kapat">×</button>
+    <div id="brief-entry"><span class="eyebrow">HADİ TANIŞALIM.</span><h2 id="dialog-title">Fikrin nerede <br><em>başlıyor?</em></h2><p class="dialog-intro">Briefini hazırla, e-posta üzerinden bize ulaştır.</p>
+      <form id="brief-form">
+        <div class="form-row"><label>Adın soyadın<input name="name" autocomplete="name" maxlength="100" required></label><label>E-posta adresin<input name="email" type="email" autocomplete="email" maxlength="160" required></label></div>
+        <div class="form-row"><label>Marka / şirket<input name="company" autocomplete="organization" maxlength="160" placeholder="Markanın adı"></label><label>İlgilendiğin alan<select name="service">
+          <option value="Sektöre özel AI çözümleri">Sektöre özel AI çözümleri</option>
+          <option value="AI prodüksiyon">AI prodüksiyon</option>
+          <option value="AI sosyal medya">AI sosyal medya</option>
+          <option value="Kreatif direksiyon & tasarım">Kreatif direksiyon & tasarım</option>
+          <option value="Birlikte karar verelim">Birlikte karar verelim</option>
+        </select></label></div>
+        <label>Aklındaki fikir<textarea name="message" rows="4" maxlength="2000" placeholder="Fikrini, hedefini veya teslim tarihini paylaş." required></textarea></label>
+        <p class="form-note">Bu form e-posta taslağı hazırlar. Bilgilerin sen e-postayı gönderene kadar Hypnos'a iletilmez.</p>
+        <button type="submit" class="pill pill-dark">E-posta taslağı hazırla <svg aria-hidden="true"><use href="#arrow"/></svg></button>
+      </form>
     </div>
-  </section>
-
-  <!-- ============ İŞLER ============ -->
-  <section class="section section-haze" id="isler">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="eyebrow" style="color:var(--coral)">
-          <span class="ring"></span>
-          <span class="meta" data-tr="İşler" data-en="Work">İşler</span>
-        </div>
-        <h2 class="display d-md"
-            data-tr="Her film farklı, kapak imzası aynı"
-            data-en="Every film differs, the cover signature stays">Her film farklı, kapak imzası aynı</h2>
-      </div>
-      <div class="work-grid reveal" id="work"></div>
-      <p class="work-note" id="work-note"></p>
-    </div>
-  </section>
-
-  <!-- ============ SÜREÇ ============ -->
-  <section class="section" id="surec">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="eyebrow" style="color:var(--violet)">
-          <span class="ring"></span>
-          <span class="meta" data-tr="Süreç" data-en="Process">Süreç</span>
-        </div>
-        <h2 class="display d-md"
-            data-tr="Tek akış, dört durak"
-            data-en="One flow, four stops">Tek akış, dört durak</h2>
-      </div>
-      <div class="steps reveal" id="steps"></div>
-    </div>
-  </section>
-
-  <!-- ============ STÜDYO ============ -->
-  <section class="section section-haze" id="studyo">
-    <div class="wrap studio-grid">
-      <div class="reveal">
-        <div class="eyebrow" style="color:var(--orange)">
-          <span class="ring"></span>
-          <span class="meta" data-tr="Stüdyo" data-en="Studio">Stüdyo</span>
-        </div>
-        <h2 class="display d-md" style="margin-bottom:22px"
-            data-tr="Gerçek ile yapay arasındaki|bütün ihtimaller"
-            data-en="Every possibility between|the real and the artificial">Gerçek ile yapay arasındaki
-bütün ihtimaller</h2>
-        <p class="lede"
-           data-tr="Hypnos Creative; reklam filmi, marka içeriği ve deneysel üretimi aynı çatı altında toplayan bir yaratıcı stüdyodur. Gerçek sette çekeriz, yapay zekâ ile üretiriz, ikisini tek bir görsel dilde birleştiririz."
-           data-en="Hypnos Creative is a creative studio bringing commercials, brand content and experimental production under one roof. We shoot on real sets, we generate with AI, and we merge both into a single visual language.">Hypnos Creative; reklam filmi, marka içeriği ve deneysel üretimi aynı çatı altında toplayan bir yaratıcı stüdyodur. Gerçek sette çekeriz, yapay zekâ ile üretiriz, ikisini tek bir görsel dilde birleştiririz.</p>
-      </div>
-      <div class="facts reveal" id="facts"></div>
-    </div>
-  </section>
-
-  <!-- ============ İLETİŞİM ============ -->
-  <section class="contact" id="iletisim">
-    <div class="wrap reveal">
-      <div class="eyebrow" style="color:var(--orange)">
-        <span class="ring"></span>
-        <span class="meta" data-tr="İletişim" data-en="Contact">İletişim</span>
-      </div>
-      <h2 class="display d-lg"
-          data-tr="Bir fikriniz mi var?"
-          data-en="Got an idea?">Bir fikriniz mi var?</h2>
-      <p class="contact-lede"
-         data-tr="Kamera dönmeye hazır. Projenizi anlatın, birlikte nasıl göstereceğimize bakalım."
-         data-en="The camera is ready to roll. Tell us about your project and let's find how to show it.">Kamera dönmeye hazır. Projenizi anlatın, birlikte nasıl göstereceğimize bakalım.</p>
-
-      <a class="mail" href="mailto:merhaba@hypnoscreative.com">merhaba@hypnoscreative.com</a>
-
-      <div class="socials">
-        <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://vimeo.com/" target="_blank" rel="noopener">Vimeo</a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <img src="assets/logo.svg" alt="Hypnos Creative">
-    <p class="meta" data-tr="© 2026 Hypnos Creative — İstanbul" data-en="© 2026 Hypnos Creative — Istanbul">© 2026 Hypnos Creative — İstanbul</p>
-  </div>
-</footer>
-
-<script>
-(function () {
-  "use strict";
-
-  /* ============================================================
-     İÇERİK — projeleri güncellemek için SADECE burayı düzenle
-     ============================================================ */
-  var PROJECTS = [
-    { title: "Eclipse",        kind: { tr: "AI Film", en: "AI Film" },              year: "2026", no: "01", accent: "var(--cobalt)", sample: true },
-    { title: "The Portal",     kind: { tr: "AI Film", en: "AI Film" },              year: "2026", no: "02", accent: "var(--violet)", sample: true },
-    { title: "In Between",     kind: { tr: "Marka Filmi", en: "Brand Film" },       year: "2026", no: "03", accent: "var(--coral)",  sample: true },
-    { title: "Neon Rain",      kind: { tr: "AI Film", en: "AI Film" },              year: "2026", no: "04", accent: "var(--orange)", sample: true },
-    { title: "Second Skin",    kind: { tr: "Post-Prodüksiyon", en: "Post" },        year: "2026", no: "05", accent: "var(--ink)",    sample: true },
-    { title: "Dream / Cut",    kind: { tr: "Deneysel", en: "Experimental" },        year: "2026", no: "06", accent: "var(--violet)", sample: true }
-  ];
-
-  var SERVICES = [
-    { accent: "var(--cobalt)", glyph: "play",
-      tr: ["AI Film & Görsel Üretim", "Yapay zekâ ile tam kurgulu film ve görsel üretimi."],
-      en: ["AI Film & Image Production", "Fully directed film and image production with AI."] },
-    { accent: "var(--violet)", glyph: "eye",
-      tr: ["Kreatif Direksiyon", "Fikirden son kareye kadar tek yaratıcı dil."],
-      en: ["Creative Direction", "One creative language from idea to final frame."] },
-    { accent: "var(--coral)", glyph: "frame",
-      tr: ["Prodüksiyon", "Gerçek set, gerçek kamera, gerçek ekip."],
-      en: ["Production", "Real sets, real cameras, real crews."] },
-    { accent: "var(--orange)", glyph: "layers",
-      tr: ["Post-Prodüksiyon", "Kurgu, renk, ses ve VFX aynı akışta."],
-      en: ["Post-Production", "Edit, color, sound and VFX in one flow."] },
-    { accent: "var(--cobalt)", glyph: "grid",
-      tr: ["Marka İçeriği & Kampanya", "Kampanya fikrinden yayın planına kadar."],
-      en: ["Brand Content & Campaign", "From campaign idea to publishing plan."] },
-    { accent: "var(--coral)", glyph: "board",
-      tr: ["Konsept & Storyboard", "Fikri görünür kılan ilk çizgiler."],
-      en: ["Concept & Storyboard", "The first lines that make an idea visible."] }
-  ];
-
-  var STEPS = [
-    { accent: "var(--cobalt)", tr: ["Brief", "Sorunu ve hedefi netleştiririz."],
-      en: ["Brief", "We sharpen the problem and the goal."] },
-    { accent: "var(--violet)", tr: ["Konsept", "Fikri storyboard ve görsel dile çeviririz."],
-      en: ["Concept", "We turn the idea into storyboard and visual language."] },
-    { accent: "var(--coral)",  tr: ["Üretim", "Gerçek çekim, AI üretim ya da ikisi birden."],
-      en: ["Production", "Real shoot, AI generation, or both."] },
-    { accent: "var(--orange)", tr: ["Teslim", "Kurgu, renk, ses; yayına hazır çıktı."],
-      en: ["Delivery", "Edit, color, sound; ready to publish."] }
-  ];
-
-  var FACTS = [
-    { tr: ["Kuruluş", "2026 · İstanbul"],   en: ["Founded", "2026 · Istanbul"] },
-    { tr: ["Odak", "AI film · Marka filmi · Post-prodüksiyon"],
-      en: ["Focus", "AI film · Brand film · Post-production"] },
-    { tr: ["Çalışma", "Fikirden teslime tek ekip"],
-      en: ["Approach", "One team from idea to delivery"] },
-    { tr: ["Diller", "Türkçe · English"],   en: ["Languages", "Turkish · English"] }
-  ];
-
-  var NOTE = {
-    tr: "[ÖRNEK] Kapaklar marka rehberindeki film kapak sistemini gösterir. Gerçek proje listesi eklenecek.",
-    en: "[SAMPLE] Covers demonstrate the film cover system from the brand guide. Real project list to be added."
-  };
-
-  /* ---------- İllüstratif glifler (tek geometrik aile) ---------- */
-  var GLYPHS = {
-    play:   '<circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 14l13 8-13 8z" fill="currentColor"/>',
-    eye:    '<circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="22" r="11" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="22" r="4.5" fill="currentColor"/>',
-    frame:  '<rect x="3" y="10" width="38" height="24" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="22" r="6" fill="currentColor"/>',
-    layers: '<circle cx="16" cy="22" r="13" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="28" cy="22" r="13" fill="none" stroke="currentColor" stroke-width="2"/>',
-    grid:   '<circle cx="10" cy="10" r="5" fill="currentColor"/><circle cx="22" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="10" r="5" fill="currentColor"/><circle cx="10" cy="22" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="22" r="5" fill="currentColor"/><circle cx="34" cy="22" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="34" r="5" fill="currentColor"/><circle cx="22" cy="34" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="5" fill="currentColor"/>',
-    board:  '<rect x="2" y="8" width="18" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="24" y="8" width="18" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="2" y="26" width="18" height="14" fill="currentColor"/><rect x="24" y="26" width="18" height="14" fill="none" stroke="currentColor" stroke-width="2"/>'
-  };
-
-  /* Kapak sanatı: aynı hipnotik halka ailesi, her kartta farklı ritim */
-  function coverArt(i) {
-    var r = "", n = 5 + (i % 3);
-    for (var k = 0; k < n; k++) {
-      var rad = 46 - k * (44 / n);
-      r += '<circle cx="50" cy="50" r="' + rad.toFixed(1) + '" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="' + (k % 2 ? 1 : 2.2) + '"/>';
-    }
-    r += '<circle cx="50" cy="50" r="4" fill="#fff"/>';
-    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + r + '</svg>';
-  }
-
-  /* ============================================================
-     Dil sistemi
-     ============================================================ */
-  var lang = "tr";
-  try { lang = localStorage.getItem("hc-lang") || "tr"; } catch (e) {}
-
-  var $ = function (s) { return document.querySelector(s); };
-
-  function render() {
-    // 1) data-tr / data-en taşıyan tüm metinler
-    var nodes = document.querySelectorAll("[data-tr]");
-    for (var i = 0; i < nodes.length; i++) {
-      var v = nodes[i].getAttribute("data-" + lang);
-      if (v !== null) nodes[i].textContent = v.replace(/\|/g, "\n");
-    }
-
-    // 2) Hizmetler
-    var s = "";
-    for (var j = 0; j < SERVICES.length; j++) {
-      var sv = SERVICES[j], t = sv[lang];
-      s += '<article class="card" style="--accent:' + sv.accent + '">' +
-             '<span class="card-glyph"><svg viewBox="0 0 44 44" aria-hidden="true">' + GLYPHS[sv.glyph] + '</svg></span>' +
-             '<h3>' + t[0] + '</h3><p>' + t[1] + '</p>' +
-           '</article>';
-    }
-    $("#services").innerHTML = s;
-
-    // 3) İşler — rehberdeki değişmez iskelet
-    var w = "";
-    for (var p = 0; p < PROJECTS.length; p++) {
-      var pr = PROJECTS[p];
-      w += '<article class="cover" style="--accent:' + pr.accent + '">' +
-             '<div class="cover-art">' +
-               '<span class="badge">' + pr.no + '</span>' + coverArt(p) +
-               '<span class="cover-ring"></span>' +
-             '</div>' +
-             '<div class="cover-info">' +
-               '<p class="cover-studio">HYPNOS ORIGINAL' + (pr.sample ? (lang === "tr" ? " · ÖRNEK" : " · SAMPLE") : "") + '</p>' +
-               '<h3 class="cover-title">' + pr.title + '</h3>' +
-               '<p class="cover-meta">' + pr.kind[lang] + ' &nbsp;/&nbsp; ' + pr.year + ' &nbsp;/&nbsp; ' + pr.no + '</p>' +
-             '</div>' +
-           '</article>';
-    }
-    $("#work").innerHTML = w;
-    $("#work-note").textContent = NOTE[lang];
-
-    // 4) Süreç
-    var st = "";
-    for (var q = 0; q < STEPS.length; q++) {
-      var sp = STEPS[q], ts = sp[lang];
-      st += '<div class="step" style="--accent:' + sp.accent + '">' +
-              '<span class="step-num">0' + (q + 1) + '</span>' +
-              '<h3>' + ts[0] + '</h3><p>' + ts[1] + '</p>' +
-            '</div>';
-    }
-    $("#steps").innerHTML = st;
-
-    // 5) Stüdyo bilgileri
-    var f = "";
-    for (var m = 0; m < FACTS.length; m++) {
-      var ft = FACTS[m][lang];
-      f += '<div class="fact"><span class="fact-k">' + ft[0] + '</span><span class="fact-v">' + ft[1] + '</span></div>';
-    }
-    $("#facts").innerHTML = f;
-
-    // 6) Sayfa dili + düğme etiketi
-    document.documentElement.lang = lang;
-    $("#lang").textContent = lang === "tr" ? "EN" : "TR";
-    document.title = lang === "tr"
-      ? "Hypnos Creative — Yeni nesil yaratıcı stüdyo"
-      : "Hypnos Creative — Next generation creative studio";
-  }
-
-  $("#lang").addEventListener("click", function () {
-    lang = lang === "tr" ? "en" : "tr";
-    try { localStorage.setItem("hc-lang", lang); } catch (e) {}
-    render();
-  });
-
-  render();
-
-  /* ============================================================
-     Etkileşim
-     ============================================================ */
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Mobil menü
-  var burger = $("#burger"), nav = $("#nav");
-  burger.addEventListener("click", function () {
-    var open = nav.classList.toggle("open");
-    burger.setAttribute("aria-expanded", open ? "true" : "false");
-  });
-  nav.addEventListener("click", function (e) {
-    if (e.target.tagName === "A") {
-      nav.classList.remove("open");
-      burger.setAttribute("aria-expanded", "false");
-    }
-  });
-
-  // Gözbebeği imleci izler — oturumdaki "saati takip eden göz" fikrinin devamı
-  var stage = $("#iris"), pupil = $("#pupil");
-  if (!reduce && stage && window.matchMedia("(pointer:fine)").matches) {
-    window.addEventListener("mousemove", function (e) {
-      var b = stage.getBoundingClientRect();
-      var cx = b.left + b.width / 2, cy = b.top + b.height / 2;
-      var dx = e.clientX - cx, dy = e.clientY - cy;
-      var d = Math.sqrt(dx * dx + dy * dy) || 1;
-      var max = b.width * 0.11;
-      var k = Math.min(d, max) / d;
-      pupil.style.transform = "translate(" + (dx * k).toFixed(1) + "px," + (dy * k).toFixed(1) + "px)";
-    }, { passive: true });
-  }
-
-  // Kaydırmada belirme
-  var items = document.querySelectorAll(".reveal");
-  if (reduce || !("IntersectionObserver" in window)) {
-    for (var z = 0; z < items.length; z++) items[z].classList.add("in");
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
-      });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
-    for (var y = 0; y < items.length; y++) io.observe(items[y]);
-  }
-})();
-</script>
+    <div id="brief-ready" hidden><span class="eyebrow">İLK ADIM TAMAM.</span><h2>Briefin <br><em>hazır.</em></h2><p class="dialog-intro">Taslağı e-posta uygulamanda açıp gönderebilirsin.</p><pre id="brief-preview"></pre><div class="ready-actions"><a id="send-email" class="pill pill-dark" href="mailto:info@hypnoscreative.com">E-postada aç ↗</a><button id="copy-brief" class="pill">Briefi kopyala</button></div><p class="form-note" id="copy-status" role="status">Alıcı: info@hypnoscreative.com · Henüz gönderilmedi.</p><button id="edit-brief" class="edit-brief">← Düzenlemeye dön</button></div>
+  </dialog>
 </body>
 </html>
